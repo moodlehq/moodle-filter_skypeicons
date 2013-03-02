@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Skype icons lang strings information
+ * Skype icons filter version information
  *
  * @package    filter_skypeicons
  * @copyright  2013 onwards Eloy Lafuente (stronk7) {@link http://stronk7.com}
@@ -24,7 +24,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$string['filtername'] = 'Skype icons filter';
-$string['settingformats'] = 'Apply to formats';
-$string['settingformats_desc'] = 'The filter will be applied only if the original text was inserted in one of the selected formats.';
-$string['yawn'] = 'yawn!'; // We just introduce one of the strings to test that lang strings are working.
+$plugin->version   = 2013030100;  // Version of the plugin
+$plugin->release   = '2.4.0';
+$plugin->maturity  = MATURITY_STABLE;
+$plugin->requires  = 2011120500; // Moodle 2.2 release and upwards
+$plugin->component = 'filter_skypeicons';
