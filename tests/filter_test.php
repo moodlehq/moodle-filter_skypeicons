@@ -78,7 +78,7 @@ class filter_skypeicons_testcase extends basic_testcase {
         );
 
         $filter = new testable_filter_skypeicons();
-        $options = array('originalformat' => FORMAT_HTML);
+        $options = array('originalformat' => FORMAT_HTML); // Only FORMAT_HTML is filtered, see {@link testable_filter_skypeicons}.
 
         foreach ($texts as $text => $expected) {
             $msg = "Testing text '$text':";
@@ -87,6 +87,27 @@ class filter_skypeicons_testcase extends basic_testcase {
             $this->assertEquals($expected, $result, $msg);
         }
     }
+
+    public function test_filter_skypeicons_formats() {
+        $filter = new testable_filter_skypeicons();
+
+        // Verify texts not matching target formats aren't filtered.
+        $expected = '(angel)';
+        $options = array('originalformat' => FORMAT_MOODLE); // Only FORMAT_HTML is filtered, see {@link testable_filter_skypeicons}.
+        $this->assertEquals($expected, $filter->filter('(angel)', $options));
+
+        $options = array('originalformat' => FORMAT_MARKDOWN); // Only FORMAT_HTML is filtered, see {@link testable_filter_skypeicons}.
+        $this->assertEquals($expected, $filter->filter('(angel)', $options));
+
+        $options = array('originalformat' => FORMAT_PLAIN); // Only FORMAT_HTML is filtered, see {@link testable_filter_skypeicons}.
+        $this->assertEquals($expected, $filter->filter('(angel)', $options));
+
+        // And texts matching target formats are filtered.
+        $expected = '<img class="emoticon" alt="angel" title="angel"'.
+                    ' src="http://www.example.com/moodle/theme/image.php/_s/standard/filter_skypeicons/1/angel" />';
+        $options = array('originalformat' => FORMAT_HTML); // Only FORMAT_HTML is filtered, see {@link testable_filter_skypeicons}.
+        $this->assertEquals($expected, $filter->filter('(angel)', $options));
+    }
 }
 
 /**
@@ -94,6 +115,11 @@ class filter_skypeicons_testcase extends basic_testcase {
  */
 class testable_filter_skypeicons extends filter_skypeicons {
     public function __construct() {
+        // Use this context for filtering.
         $this->context = context_system::instance();
+        // Define FORMAT_HTML as only one filtering (without DB access).
+        $config = new stdClass();
+        $config->formats = implode(',', array(FORMAT_HTML));
+        self::$globalconfig = $config;
     }
 }

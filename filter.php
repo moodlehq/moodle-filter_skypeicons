@@ -27,6 +27,16 @@ defined('MOODLE_INTERNAL') || die();
 class filter_skypeicons extends moodle_text_filter {
 
     /**
+     * @var array global configuration for this filter
+     *
+     * Note: this has been borrowed from {@link filter_emoticon} because
+     * right now it's impossible to extend from that class. If some day
+     * we plan proper support for multiple emoticon filters... and it's possible
+     * to extend from that class, then method could be deleted safely.
+     */
+    protected static $globalconfig;
+
+    /**
      * @var bool filter in case sensitive mode. Some day, this may be a filter setting.
      */
     protected $casesensitive = true;
@@ -90,6 +100,12 @@ class filter_skypeicons extends moodle_text_filter {
             // If the format is not specified, we are probably called by {@see format_string()}
             // in that case, it would be dangerous to replace text with the image because it could
             // be stripped. therefore, we do nothing.
+            return $text;
+        }
+
+        if (!in_array($options['originalformat'], explode(',', $this->get_global_config('formats')))) {
+            // If the format is not one of the configured formats where
+            // the filter is configured to work, we do nothing.
             return $text;
         }
 
@@ -167,5 +183,53 @@ class filter_skypeicons extends moodle_text_filter {
         $text = filter_phrases($text, $emoticonslist[$lang], $ignoretagsopen, $ignoretagsclose, true);
 
         return $text;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
+    // internal implementation starts here
+    ////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Returns the global filter setting
+     *
+     * If the $name is provided, returns single value. Otherwise returns all
+     * global settings in object. Returns null if the named setting is not
+     * found.
+     *
+     * Note: this has been borrowed from {@link filter_emoticon} because
+     * right now it's impossible to extend from that class. If some day
+     * we plan proper support for multiple emoticon filters... and it's possible
+     * to extend from that class, then method could be deleted safely.
+     *
+     * @param mixed $name optional config variable name, defaults to null for all
+     * @return string|object|null
+     */
+    protected function get_global_config($name=null) {
+        $this->load_global_config();
+        if (is_null($name)) {
+            return self::$globalconfig;
+
+        } elseif (array_key_exists($name, self::$globalconfig)) {
+            return self::$globalconfig->{$name};
+
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Makes sure that the global config is loaded in $this->globalconfig
+     *
+     * Note: this has been borrowed from {@link filter_emoticon} because
+     * right now it's impossible to extend from that class. If some day
+     * we plan proper support for multiple emoticon filters... and it's possible
+     * to extend from that class, then method could be deleted safely.
+     *
+     * @return void
+     */
+    protected function load_global_config() {
+        if (is_null(self::$globalconfig)) {
+            self::$globalconfig = get_config(get_class($this));
+        }
     }
 }
