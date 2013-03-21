@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Skype icons lang strings information
+ * Skype icons filter settings information
  *
  * @package    filter_skypeicons
  * @copyright  2013 onwards Eloy Lafuente (stronk7) {@link http://stronk7.com}
@@ -24,7 +24,10 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$string['filtername'] = 'Skype icons filter';
-$string['settingformats'] = 'Apply to formats';
-$string['settingformats_desc'] = 'The filter will be applied only if the original text was inserted in one of the selected formats.';
-$string['yawn'] = 'yawn!'; // We just introduce one of the strings to test that lang strings are working.
+if ($ADMIN->fulltree) {
+
+    $settings->add(new admin_setting_configmulticheckbox('filter_skypeicons/formats',
+            get_string('settingformats', 'filter_skypeicons'),
+            get_string('settingformats_desc', 'filter_skypeicons'),
+            array(FORMAT_HTML => 1, FORMAT_MARKDOWN => 1, FORMAT_MOODLE => 1), format_text_menu()));
+}
