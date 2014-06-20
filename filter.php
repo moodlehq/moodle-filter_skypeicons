@@ -137,10 +137,11 @@ class filter_skypeicons extends moodle_text_filter {
                 $replace = $OUTPUT->render($manager->prepare_renderable_emoticon($emoticon));
                 // Nasty hack to split the calculated img tag into start, search and end. We cannot
                 // pass the $replace alone because it's cleaned by strip_tags().
-                preg_match("~(.*)($emoticon->imagename)(\" />)~", $replace, $matches);
-                // Create the filter object.
-                $filter = new filterobject($search, $matches[1], $matches[3], $this->casesensitive, $this->fullmatch, $matches[2]);
-                $emoticonslist[$lang][$search] = $filter;
+                if (preg_match("~(.*)($emoticon->imagename)(\" />)~", $replace, $matches)) {
+                    // Create the filter object.
+                    $filter = new filterobject($search, $matches[1], $matches[3], $this->casesensitive, $this->fullmatch, $matches[2]);
+                    $emoticonslist[$lang][$search] = $filter;
+                }
             }
 
             // Now process the aliases, creating standard filter objects too.
@@ -161,13 +162,17 @@ class filter_skypeicons extends moodle_text_filter {
                 $replace = $OUTPUT->render($manager->prepare_renderable_emoticon($emoticon));
                 // Nasty hack to split the calculated img tag into start, search and end. We cannot
                 // pass the $replace alone because it's cleaned by strip_tags().
-                preg_match("~(.*)($emoticon->imagename)(\" />)~", $replace, $matches);
-                // Create the filter object.
-                $filter = new filterobject($search, $matches[1], $matches[3], $this->casesensitive, $this->fullmatch, $matches[2]);
-                $emoticonslist[$lang][$search] = $filter;
+                if (preg_match("~(.*)($emoticon->imagename)(\" />)~", $replace, $matches)) {
+                    // Create the filter object.
+                    $filter = new filterobject($search, $matches[1], $matches[3], $this->casesensitive, $this->fullmatch, $matches[2]);
+                    $emoticonslist[$lang][$search] = $filter;
+                }
             }
-            // Remove dupes, just in case.
-            $emoticonslist[$lang] = filter_remove_duplicates($emoticonslist[$lang]);
+
+            if (!empty($emoticonslist[$lang])) {
+                // Remove dupes, just in case.
+                $emoticonslist[$lang] = filter_remove_duplicates($emoticonslist[$lang]);
+            }
         }
         // Define the list of tags where we are not going to filter. Note this
         // is the same than the default used by filter_phrases(), but we take out
