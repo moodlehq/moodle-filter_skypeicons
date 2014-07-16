@@ -51,30 +51,30 @@ class filter_skypeicons_testcase extends basic_testcase {
 
             // And now, the matching ones.
             '(angel)' => '<img class="emoticon" alt="angel" title="angel"'.
-                    ' src="http://www.example.com/moodle/theme/image.php/_s/standard/filter_skypeicons/1/angel" />',
+                    ' src="http://www.example.com/moodle/theme/image.php/_s/clean/filter_skypeicons/1/angel" />',
             ' (angel) ' => ' <img class="emoticon" alt="angel" title="angel"'.
-                    ' src="http://www.example.com/moodle/theme/image.php/_s/standard/filter_skypeicons/1/angel" /> ',
+                    ' src="http://www.example.com/moodle/theme/image.php/_s/clean/filter_skypeicons/1/angel" /> ',
             '((angel))' => '(<img class="emoticon" alt="angel" title="angel"'.
-                    ' src="http://www.example.com/moodle/theme/image.php/_s/standard/filter_skypeicons/1/angel" />)',
+                    ' src="http://www.example.com/moodle/theme/image.php/_s/clean/filter_skypeicons/1/angel" />)',
             '.(angel),' => '.<img class="emoticon" alt="angel" title="angel"'.
-                    ' src="http://www.example.com/moodle/theme/image.php/_s/standard/filter_skypeicons/1/angel" />,',
+                    ' src="http://www.example.com/moodle/theme/image.php/_s/clean/filter_skypeicons/1/angel" />,',
             ':(angel);' => ':<img class="emoticon" alt="angel" title="angel"'.
-                    ' src="http://www.example.com/moodle/theme/image.php/_s/standard/filter_skypeicons/1/angel" />;',
+                    ' src="http://www.example.com/moodle/theme/image.php/_s/clean/filter_skypeicons/1/angel" />;',
             '+(angel)=' => '+<img class="emoticon" alt="angel" title="angel"'.
-                    ' src="http://www.example.com/moodle/theme/image.php/_s/standard/filter_skypeicons/1/angel" />=',
+                    ' src="http://www.example.com/moodle/theme/image.php/_s/clean/filter_skypeicons/1/angel" />=',
             '+(angel)' => '+<img class="emoticon" alt="angel" title="angel"'.
-                    ' src="http://www.example.com/moodle/theme/image.php/_s/standard/filter_skypeicons/1/angel" />',
+                    ' src="http://www.example.com/moodle/theme/image.php/_s/clean/filter_skypeicons/1/angel" />',
             '<b>(angel)</b>' => '<b><img class="emoticon" alt="angel" title="angel"'.
-                    ' src="http://www.example.com/moodle/theme/image.php/_s/standard/filter_skypeicons/1/angel" /></b>',
+                    ' src="http://www.example.com/moodle/theme/image.php/_s/clean/filter_skypeicons/1/angel" /></b>',
 
             // Specially in the link texts they must be working (note this is different from default's filter_phrases()
             // behaviour, we are overriding ignore-tags.
             '<a href="hello">(angel)</a>' => '<a href="hello"><img class="emoticon" alt="angel" title="angel"'.
-                    ' src="http://www.example.com/moodle/theme/image.php/_s/standard/filter_skypeicons/1/angel" /></a>',
+                    ' src="http://www.example.com/moodle/theme/image.php/_s/clean/filter_skypeicons/1/angel" /></a>',
 
             // Also, verify lang strings work, if present ("yawn is the only one having lang string).
             ' (yawn) ' => ' <img class="emoticon" alt="yawn!" title="yawn!"'.
-                          ' src="http://www.example.com/moodle/theme/image.php/_s/standard/filter_skypeicons/1/yawn" /> ',
+                          ' src="http://www.example.com/moodle/theme/image.php/_s/clean/filter_skypeicons/1/yawn" /> ',
         );
 
         $filter = new testable_filter_skypeicons();
@@ -104,7 +104,7 @@ class filter_skypeicons_testcase extends basic_testcase {
 
         // And texts matching target formats are filtered.
         $expected = '<img class="emoticon" alt="angel" title="angel"'.
-                    ' src="http://www.example.com/moodle/theme/image.php/_s/standard/filter_skypeicons/1/angel" />';
+                    ' src="http://www.example.com/moodle/theme/image.php/_s/clean/filter_skypeicons/1/angel" />';
         $options = array('originalformat' => FORMAT_HTML); // Only FORMAT_HTML is filtered, see {@link testable_filter_skypeicons}.
         $this->assertEquals($expected, $filter->filter('(angel)', $options));
     }
