@@ -141,6 +141,8 @@ class filter_skypeicons extends moodle_text_filter {
                     // Create the filter object.
                     $filter = new filterobject($search, $matches[1], $matches[3], $this->casesensitive, $this->fullmatch, $matches[2]);
                     $emoticonslist[$lang][$search] = $filter;
+                } else {
+                    debugging("Invalid emoticon imagename detected ({$emoticon->imagename})");
                 }
             }
 
@@ -166,6 +168,8 @@ class filter_skypeicons extends moodle_text_filter {
                     // Create the filter object.
                     $filter = new filterobject($search, $matches[1], $matches[3], $this->casesensitive, $this->fullmatch, $matches[2]);
                     $emoticonslist[$lang][$search] = $filter;
+                } else {
+                    debugging("Invalid emoticon imagename alias detected ({$emoticon->imagename})");
                 }
             }
 
