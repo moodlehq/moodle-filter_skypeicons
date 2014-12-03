@@ -66,6 +66,13 @@ class filter_skypeicons_testcase extends basic_testcase {
                     ' src="http://www.example.com/moodle/theme/image.php/_s/clean/filter_skypeicons/1/angel" />',
             '<b>(angel)</b>' => '<b><img class="emoticon" alt="angel" title="angel"'.
                     ' src="http://www.example.com/moodle/theme/image.php/_s/clean/filter_skypeicons/1/angel" /></b>',
+            // Check these three work as they have some sort of issue - MDLSITE-3076.
+            '(phone)' => '<img class="emoticon" alt="phone" title="phone"'.
+                    ' src="http://www.example.com/moodle/theme/image.php/_s/clean/filter_skypeicons/1/phone" />',
+            '(pizza)' => '<img class="emoticon" alt="pizza" title="pizza"'.
+                    ' src="http://www.example.com/moodle/theme/image.php/_s/clean/filter_skypeicons/1/pizza" />',
+            '(puke)' => '<img class="emoticon" alt="puke" title="puke"'.
+                    ' src="http://www.example.com/moodle/theme/image.php/_s/clean/filter_skypeicons/1/puke" />',
 
             // Specially in the link texts they must be working (note this is different from default's filter_phrases()
             // behaviour, we are overriding ignore-tags.
